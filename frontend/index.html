@@ -2,63 +2,12 @@
 <html lang="id">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>NutriAI - Smart Nutrition Assistant</title>
 
-<title>NutriAI</title>
-
-
-<style>
-
-body{
-
-font-family: Arial;
-background:#f2f8f4;
-text-align:center;
-padding:50px;
-
-}
-
-
-.container{
-
-background:white;
-padding:30px;
-border-radius:15px;
-max-width:500px;
-margin:auto;
-
-}
-
-
-input{
-
-width:80%;
-padding:12px;
-
-}
-
-
-button{
-
-padding:12px 25px;
-background:#2ecc71;
-color:white;
-border:none;
-border-radius:8px;
-cursor:pointer;
-
-}
-
-
-#result{
-
-margin-top:20px;
-
-}
-
-</style>
-
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -69,105 +18,140 @@ margin-top:20px;
 <div class="container">
 
 
-<h1>🥗 NutriAI</h1>
+    <header>
 
-<p>
-AI Food Recommendation System
-</p>
+        <h1>🍎 NutriAI</h1>
 
+        <p>
+            AI Nutrition Assistant untuk rekomendasi makanan sehat
+        </p>
 
-<input 
-id="food"
-placeholder="Contoh: makanan tinggi protein">
-
-
-<br><br>
+    </header>
 
 
-<button onclick="recommend()">
 
-Cari Rekomendasi
-
-</button>
+    <div class="card">
 
 
-<div id="result"></div>
+        <h2>👤 Data Kamu</h2>
+
+
+        <div class="grid">
+
+
+            <input 
+            id="age"
+            type="number"
+            placeholder="Umur">
+
+
+            <select id="gender">
+
+                <option value="male">
+                    Laki-laki
+                </option>
+
+                <option value="female">
+                    Perempuan
+                </option>
+
+            </select>
+
+
+            <input
+            id="weight"
+            type="number"
+            placeholder="Berat (kg)">
+
+
+
+            <input
+            id="height"
+            type="number"
+            placeholder="Tinggi (cm)">
+
+
+
+        </div>
+
+
+
+        <h2>🎯 Tujuan Kesehatan</h2>
+
+
+        <select id="goal">
+
+
+            <option>
+                Healthy Lifestyle
+            </option>
+
+
+            <option>
+                Diet
+            </option>
+
+
+            <option>
+                Muscle Gain
+            </option>
+
+
+            <option>
+                Weight Loss
+            </option>
+
+
+        </select>
+
+
+
+
+        <h2>🥗 Preferensi Makanan</h2>
+
+
+        <input
+
+        id="preference"
+
+        placeholder="Contoh: high protein, rendah kalori">
+
+
+        <button onclick="getRecommendation()">
+
+            ✨ Dapatkan Rekomendasi
+
+        </button>
+
+
+
+    </div>
+
+
+
+
+    <div class="card result">
+
+
+        <h2>🍽️ Hasil Rekomendasi</h2>
+
+
+        <div id="result">
+
+            Belum ada rekomendasi
+
+        </div>
+
+
+    </div>
+
 
 
 </div>
 
 
 
-<script>
-
-
-async function recommend(){
-
-
-let food =
-document.getElementById("food").value;
-
-
-
-document.getElementById("result").innerHTML =
-"AI sedang menganalisa...";
-
-
-
-let response =
-await fetch(
-"http://localhost:8000/recommend",
-{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-preference:food
-
-})
-
-}
-
-);
-
-
-
-let data =
-await response.json();
-
-
-
-document.getElementById("result").innerHTML =
-
-`
-
-<h3>${data.recommendation.food}</h3>
-
-<p>
-<b>Nutrisi:</b>
-<br>
-${data.recommendation.nutrition.join(", ")}
-</p>
-
-
-<p>
-<b>Manfaat:</b>
-<br>
-${data.recommendation.benefit.join(", ")}
-</p>
-
-`;
-
-}
-
-
-</script>
-
+<script src="script.js"></script>
 
 
 </body>
