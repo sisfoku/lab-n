@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>NutriAI</title>
+
+
+<style>
+
+body{
+
+font-family: Arial;
+background:#f2f8f4;
+text-align:center;
+padding:50px;
+
+}
+
+
+.container{
+
+background:white;
+padding:30px;
+border-radius:15px;
+max-width:500px;
+margin:auto;
+
+}
+
+
+input{
+
+width:80%;
+padding:12px;
+
+}
+
+
+button{
+
+padding:12px 25px;
+background:#2ecc71;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+
+#result{
+
+margin-top:20px;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>🥗 NutriAI</h1>
+
+<p>
+AI Food Recommendation System
+</p>
+
+
+<input 
+id="food"
+placeholder="Contoh: makanan tinggi protein">
+
+
+<br><br>
+
+
+<button onclick="recommend()">
+
+Cari Rekomendasi
+
+</button>
+
+
+<div id="result"></div>
+
+
+</div>
+
+
+
+<script>
+
+
+async function recommend(){
+
+
+let food =
+document.getElementById("food").value;
+
+
+
+document.getElementById("result").innerHTML =
+"AI sedang menganalisa...";
+
+
+
+let response =
+await fetch(
+"http://localhost:8000/recommend",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+preference:food
+
+})
+
+}
+
+);
+
+
+
+let data =
+await response.json();
+
+
+
+document.getElementById("result").innerHTML =
+
+`
+
+<h3>${data.recommendation.food}</h3>
+
+<p>
+<b>Nutrisi:</b>
+<br>
+${data.recommendation.nutrition.join(", ")}
+</p>
+
+
+<p>
+<b>Manfaat:</b>
+<br>
+${data.recommendation.benefit.join(", ")}
+</p>
+
+`;
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
